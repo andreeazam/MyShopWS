@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 
 public class LinieComanda {
@@ -218,10 +219,10 @@ public class LinieComanda {
 	}
 	
 
-	public List<LinieComanda> obtineLiniiComandaClient(long idComandaClient){
+	public ArrayList<LinieComanda> obtineLiniiComandaClient(long idComandaClient){
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		List<LinieComanda> lcomList = new ArrayList<>();
+		ArrayList<LinieComanda> lcomList = new ArrayList<LinieComanda>();
 		try {
 		Connection conn = DriverManager.getConnection(DBConnect.getURL(),DBConnect.getUSERNAME(),DBConnect.getPASSWORD());
 		ps = conn.prepareStatement("select l.LINIECOMANDACLIENT_ID, l.ID_COMANDACLIENT,l.id_PRODUS, l.CANTITATE,l.PRETPRODUS,l.LCCVALOARE, p.DENUMIREPRODUS from LINIICOMANDACLIENTI l, PRODUSE p where l.ID_PRODUS = p.ID_PRODUS and l.ID_COMANDACLIENT = ?");
@@ -230,9 +231,9 @@ public class LinieComanda {
 		//LinieComanda lcom = new LinieComanda();
 		
 		rs = ps.executeQuery();
-		LinieComanda lcom = new LinieComanda();
+		//LinieComanda lcom = new LinieComanda();
 		while (rs.next()) {
-			// LinieComanda lcom = new LinieComanda();
+			 LinieComanda lcom = new LinieComanda();
 			 int index = 1;
 			
 				lcom.setIdLinieComanda(rs.getLong(index++));
@@ -244,7 +245,6 @@ public class LinieComanda {
 				lcom.setDenumireProdus(rs.getString(index++));
 				
 				lcomList.add(lcom);
-	
 		}
 		
 		}catch(SQLException e){

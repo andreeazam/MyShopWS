@@ -106,18 +106,16 @@ public class Comanda {
 		 		System.out.println("Eroare!");
 		 	}else{
 		 	
-		 		com.idComandaClient = rs.getLong(1);
-		 		com.numarComanda = rs.getLong(2);
-		 		com.idClient = rs.getLong(3);
-		 		com.valoareComanda = rs.getInt(4);
-		 		com.idStatus = rs.getInt(5);	 		
+		 		com.idComandaClient = rs.getLong("ID_COMANDACLIENT");
+		 		com.numarComanda = rs.getLong("NUMARCOMANDA");
+		 		com.idClient = rs.getLong("ID_CLIENT");
+		 		com.valoareComanda = rs.getInt("VALOARE");
+		 		com.idStatus = rs.getInt("ID_STATUS");	 		
 		 	}
 		 			
 		}catch(SQLException e){
 			e.getMessage();
 		}
-		 
-		System.out.println(String.valueOf("ggggggggggg"));
 		
 		return com ;		
 	}
@@ -237,13 +235,16 @@ public class Comanda {
 		
 		if(rs.next()){
 			
-			 com.idComandaClient = rs.getLong(1);
-			 com.numarComanda = rs.getLong(2);
-			 com.idClient=rs.getLong(3);
-			 com.valoareComanda=rs.getDouble(4);
-			 com.idStatus = rs.getInt(5);
+			 com.idComandaClient = rs.getLong("ID_COMANDACLIENT");
+			 com.numarComanda = rs.getLong("NUMARCOMANDA");
+			 com.idClient=rs.getLong("ID_CLIENT");
+			 com.valoareComanda=rs.getDouble("VALOARE");
+			 com.idStatus = rs.getInt("ID_STATUS");
 		}
 		
+        ps.close();
+        conn.close();
+        
 		}catch(SQLException e){
 			e.getMessage();
 		}
@@ -293,7 +294,8 @@ public class Comanda {
 			
 		}catch(SQLException e){
 			e.printStackTrace();
-		}		
+		}
+		
 		return com;
 	}
 }

@@ -68,7 +68,10 @@ public class WebServiceComanda {
 	public Comanda confirmaPrimire(@QueryParam("idComandaClient") long idComanda)							
 							{		 	
 		Comanda comanda = new Comanda();
-	    Comanda result = comanda.confirmaPrimire(idComanda);	;
+		comanda.setIdComandaClient(idComanda);
+	    Comanda result = comanda.confirmaPrimire(idComanda);	
+	    Produs produs = new Produs();
+	    produs.updateCantitateStoc(comanda);
 		return result;
 	}
 }

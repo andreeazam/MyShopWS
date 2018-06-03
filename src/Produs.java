@@ -3,6 +3,9 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 public class Produs {
     private long idProdus;
@@ -85,7 +88,10 @@ public class Produs {
 		 			pr.existaInStoc = true;	 			
 		 		}
 		 	}
-		 			
+		 	
+	        ps.close();
+	        conn.close();
+	        
 		}catch(SQLException e){
 			e.getMessage();
 		}
@@ -93,5 +99,34 @@ public class Produs {
 		System.out.println(String.valueOf(pr.existaProdus));
 		
 		return pr;
+	}
+	
+	public void updateCantitateStoc(Comanda comanda){
+		ArrayList<LinieComanda> liniiComanda = new ArrayList<LinieComanda>();
+		LinieComanda linieComanda =  new LinieComanda();
+		liniiComanda = linieComanda.obtineLiniiComandaClient(comanda.getIdComandaClient());
+		Produs produs = new Produs();
+		
+		for(LinieComanda linie : liniiComanda){
+			produs = produs.incarcaDetaliiProdus(linie.getIdProdus());
+			int cantitateNoua = produs.getCantitateInStoc() - linie.getCantitate();
+			
+			try{
+				 Connection conn = DriverManager.getConnection(DBConnect.getURL(),DBConnect.getUSERNAME(),DBConnect.getPASSWORD());
+				 PreparedStatement ps;
+				 int res;
+				 ps = conn.prepareStatement("update PRODUSE set CANTITATEINSTOC = ? where ID_PRODUS = ?");					 									
+				 	ps.setLong(1, cantitateNoua);
+				 	ps.setLong(2, produs.getIdProdus());
+				 				 	
+				 	res = ps.executeUpdate();
+				 	
+			        ps.close();
+			        conn.close();
+				 				
+			}catch(SQLException e){
+				e.printStackTrace();
+			}
+		}		
 	}
 }

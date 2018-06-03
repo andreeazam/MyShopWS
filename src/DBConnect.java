@@ -26,6 +26,4 @@ public class DBConnect {
 	public static String getPASSWORD() {
 		return PASSWORD;
 	}
-	
-
 }
